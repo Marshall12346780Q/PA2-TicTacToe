@@ -34,17 +34,17 @@ public class TicTacToe {
 						if(e.getSource()==buttons[i]) {
 							if(p1flag) {
 								if(buttons[i].getText()=="") {
-									buttons[i].setText("X");
+									buttons[i].setText("O");
 									p1flag=false;
-									textfield.setText("O turn");
+									textfield.setText("X turn");
 									checkForWinner();
 								}
 							}
 							else {
 								if(buttons[i].getText()=="") {
-									buttons[i].setText("O");
+									buttons[i].setText("X");
 									p1flag=true;
-									textfield.setText("X turn");
+									textfield.setText("O turn");
 									checkForWinner();
 								}
 							}
