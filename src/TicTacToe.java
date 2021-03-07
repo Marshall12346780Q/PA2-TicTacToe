@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
+import javax.swing.Timer;
 
 public class TicTacToe {
 
@@ -11,6 +12,8 @@ public class TicTacToe {
 	JPanel topPane = new JPanel();
 	JPanel bottomPane = new JPanel();
 	JLabel textfield = new JLabel();
+	JLabel timerlabel = new JLabel("1:00");
+	
     boolean p1flag;
 
 	public TicTacToe(){
@@ -20,6 +23,27 @@ public class TicTacToe {
 		frame.getContentPane().setBackground(new Color(50,50,50));
 		frame.setLayout(new BorderLayout());
 		frame.setVisible(true);
+		final Timer t = new Timer(1000, new ActionListener() {
+			int time = 60;
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				time--;
+				timerlabel.setText(formatTime(time/60) + ":" + formatTime(time % 60));
+				if (time == 0) {
+					final Timer timer = (Timer) e.getSource();
+					timer.stop();
+					timerlabel.setText("TIME ENDED GAME STOPPED");
+					for(int i = 0; i < 9; i++) {
+						buttons[i].setEnabled(true);
+					}
+					for (int i = 0; i < 9; i++) {
+						buttons[i].setText("");
+					}
+				}
+				
+			}
+		});
+		
 		
 		bottomPane.setLayout(new GridLayout(3,3));
 		
@@ -37,7 +61,9 @@ public class TicTacToe {
 									buttons[i].setText("O");
 									p1flag=false;
 									textfield.setText("X turn");
-									checkForWinner();
+									boolean check = checkForWinner();
+									if (check) 
+										t.stop();
 								}
 							}
 							else {
@@ -45,7 +71,9 @@ public class TicTacToe {
 									buttons[i].setText("X");
 									p1flag=true;
 									textfield.setText("O turn");
-									checkForWinner();
+									boolean check = checkForWinner();
+									if (check) 
+										t.stop();	
 								}
 							}
 						}			
@@ -56,6 +84,8 @@ public class TicTacToe {
 		
 		topPane.add(textfield);
 		topPane.add(reset);
+		t.start();
+		topPane.add(timerlabel);
 		reset.setText("RESET");
 		reset.addActionListener(new ActionListener() {
 			@Override 
@@ -73,63 +103,65 @@ public class TicTacToe {
 		
 	}
 	
-	public void checkForWinner() {
+	public boolean checkForWinner() {
 		// Y wins
 		if((buttons[0].getText().equals("O")) && (buttons[3].getText().equals("O")) && (buttons[0].getText().equals("O"))) {
-			hasWinner("O");
+			return hasWinner("O");
 		}
 		if((buttons[1].getText().equals("O")) && (buttons[4].getText().equals("O")) && (buttons[7].getText().equals("O"))) {
-			hasWinner("O");
+			return hasWinner("O");
 		}
 		if((buttons[2].getText().equals("O")) && (buttons[5].getText().equals("O")) && (buttons[8].getText().equals("O"))) {
-			hasWinner("O");
+			return hasWinner("O");
 		}
 		if((buttons[0].getText().equals("O")) && (buttons[4].getText().equals("O")) && (buttons[8].getText().equals("O"))) {
-			hasWinner("O");
+			return hasWinner("O");
 		}
 		if((buttons[2].getText().equals("O")) && (buttons[4].getText().equals("O")) && (buttons[6].getText()=="O")) {
-			hasWinner("O");
+			return hasWinner("O");
 		}
 		if((buttons[0].getText().equals("O")) &&(buttons[1].getText().equals("O")) &&(buttons[2].getText().equals("O"))) {
-			hasWinner("O");
+			return hasWinner("O");
 		}
 		if(	(buttons[3].getText().equals("O")) &&	(buttons[4].getText().equals("O")) &&(buttons[5].getText().equals("O"))) {
-			hasWinner("O");
+			return hasWinner("O");
 		}
 		if((buttons[6].getText().equals("O")) &&(buttons[7].getText().equals("O")) && (buttons[8].getText().equals("O"))) {
-			hasWinner("O");
+			return hasWinner("O");
 		}
 		// X wins 
 		if((buttons[0].getText().equals("X")) && (buttons[3].getText().equals("X")) &&(buttons[6].getText().equals("X"))) {
-			hasWinner("X");
+			return hasWinner("X");
 		}
 		if((buttons[1].getText().equals("X")) &&(buttons[4].getText().equals("X")) && (buttons[7].getText().equals("X"))) {
-			hasWinner("X");
+			return hasWinner("X");
 		}
 		if((buttons[2].getText().equals("X")) &&(buttons[5].getText().equals("X")) &&(buttons[8].getText().equals("X"))) {
-			hasWinner("X");
+			return hasWinner("X");
 		}
 		if((buttons[0].getText().equals("X")) &&(buttons[4].getText().equals("X")) &&(buttons[8].getText().equals("X"))) {
-			hasWinner("X");
+			return hasWinner("X");
 		}
 		if((buttons[2].getText().equals("X")) &&(buttons[4].getText().equals("X")) &&(buttons[6].getText().equals("X"))) {
-			hasWinner("X");
+			return hasWinner("X");
 		}
 		if((buttons[0].getText().equals("X")) && (buttons[1].getText().equals("X")) && (buttons[2].getText().equals("X"))) {
-			hasWinner("X");
+			return hasWinner("X");
 		}
 		if((buttons[3].getText().equals("X")) && (buttons[4].getText().equals("X")) && (buttons[5].getText().equals("X"))) {
-			hasWinner("X");
+			return hasWinner("X");
 		}
 		if((buttons[6].getText().equals("X")) && (buttons[7].getText().equals("X")) &&(buttons[9].getText().equals("X"))) {
-			hasWinner("X");
+			return hasWinner("X");
 		}
+		return false;
 		
 		
 		
 	}
 	
-	public void hasWinner(String winner) {
+	public boolean hasWinner(String winner) {
+		
 		
 		for(int i=0;i<9;i++) {
 			buttons[i].setEnabled(false);
@@ -139,8 +171,17 @@ public class TicTacToe {
 		if (winner.equals("O")) 
 			textfield.setText("O wins");
 		
+		return true;
 		
 	}
+	
+	private static String formatTime(int i) {
+        String result = String.valueOf(i);
+        if (result.length() == 1) {
+            result = "0" + result;
+        }
+        return result;
+    }
 	
 }
 
