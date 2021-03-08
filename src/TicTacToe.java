@@ -6,16 +6,16 @@ import javax.swing.Timer;
 
 public class TicTacToe {
 
-	JButton[] buttons = new JButton[9];
-	JButton reset = new JButton();
-	JFrame frame = new JFrame();
-	JPanel topPane = new JPanel();
-	JPanel bottomPane = new JPanel();
-	JLabel textfield = new JLabel();
-	JLabel timerlabel = new JLabel("Time Remaining This Turn: 15");
-	int time = 15;
+	public JButton[] buttons = new JButton[9];
+	private JButton reset = new JButton();
+	private JFrame frame = new JFrame();
+	private JPanel topPane = new JPanel();
+	private JPanel bottomPane = new JPanel();
+	private JLabel textfield = new JLabel();
+	private JLabel timerlabel = new JLabel("Time Remaining This Turn: 15");
+	private int time = 15;
 	
-    boolean p1flag;
+    private boolean p1flag;
 
 	public TicTacToe(){
 		
@@ -58,7 +58,6 @@ public class TicTacToe {
 						buttons[i].setText("");
 					}
 				}
-				
 			}
 		});
 		for(int i=0;i<9;i++) {
@@ -113,7 +112,7 @@ public class TicTacToe {
 	}
 	
 	
-	public boolean checkForWinner() {
+	private boolean checkForWinner() {
 		// Y wins
 		if((buttons[0].getText().equals("O")) && (buttons[3].getText().equals("O")) && (buttons[4].getText().equals("O"))) {
 			return hasWinner("O");
@@ -183,7 +182,6 @@ public class TicTacToe {
 	}
 	
 	public boolean hasWinner(String winner) {
-		
 		
 		for(int i=0;i<9;i++) {
 			buttons[i].setEnabled(false);
