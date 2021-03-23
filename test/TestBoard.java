@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 class TestBoard {
 
+	/*
 	@Test
 	public void winnerX() {
 		TicTacToe tic = new TicTacToe();
@@ -55,6 +56,6 @@ class TestBoard {
 		tic.buttons[8].setText("O");
 		tic.checkForWinner();
 		assertEquals("O wins", tic.textfield.getText());
-	}
+	} */
 
 }
