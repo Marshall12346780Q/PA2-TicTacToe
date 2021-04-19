@@ -2,7 +2,9 @@
 public class Main {
 
 	public static void main(String[] args) {
-			TicTacToe tic = new TicTacToe();
+		
+			Menu menu = new Menu();
+			//TicTacToe tic = new TicTacToe();
 	}
 
 }

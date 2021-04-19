@@ -5,56 +5,40 @@ import org.junit.jupiter.api.Test;
 
 class TestBoard {
 
+	
 	@Test
 	public void winnerX() {
-		TicTacToe tic = new TicTacToe();
-		assertEquals(true, tic.hasWinner("X"));
+		TicTacToe tic = new TicTacToe(4,5,3);
+		assertEquals(false, tic.checkForWinner(0,"X"));
 	}
 	
 	@Test
 	public void winnerO() {
-		TicTacToe tic = new TicTacToe();
-		assertEquals(true, tic.hasWinner("O"));
+		TicTacToe tic = new TicTacToe(5,6,4);
+		assertEquals(false, tic.checkForWinner(0,"O"));
 	}
 	
 	@Test
-	public void draw() {
-		TicTacToe tic = new TicTacToe();
-		assertEquals(true, tic.hasWinner("draw"));
+	public void isMultipleFalse() {
+		TicTacToe tic = new TicTacToe(5,5,2);
+		assertEquals(false, tic.isMultiple(15, 15, 4));
+	}
+	
+	@Test 
+	public void isMultipleTrue() {
+		TicTacToe tic = new TicTacToe(10,10,4);
+		assertEquals(true, tic.isMultiple(15, 30, 15));
 	}
 	
 	@Test
-	public void checkForDraw() //Ensure no false victories, confirm draw
-	{
-		TicTacToe tic = new TicTacToe();
-		tic.buttons[0].setText("X");
-		tic.buttons[1].setText("X");
-		tic.buttons[5].setText("X");
-		assertEquals(false, tic.checkForWinner());
-		tic.buttons[3].setText("O");
-		tic.buttons[4].setText("O");
-		tic.buttons[2].setText("O");
-		assertEquals(false, tic.checkForWinner());
-		tic.buttons[6].setText("X");
-		tic.buttons[7].setText("X");
-		tic.buttons[8].setText("O");
-		tic.checkForWinner();
-		assertEquals("Draw",tic.textfield.getText());
+	public void testScale() {
+		TicTacToe tic = new TicTacToe(3,3,2); 
+		assertEquals(120, tic.scaleButton());
+		TicTacToe tic1 = new TicTacToe(5,5,3);
+		assertEquals(60, tic1.scaleButton());
+		TicTacToe tic2 = new TicTacToe(10,9,3);
+		assertEquals(12, tic2.scaleButton());
 	}
-	@Test
-	public void checkForWinner() //Ensure wins are detected
-	{
-		TicTacToe tic = new TicTacToe();
-		tic.buttons[0].setText("X");
-		tic.buttons[4].setText("X");
-		tic.buttons[8].setText("X");
-		tic.checkForWinner();
-		assertEquals("X wins", tic.textfield.getText());
-		tic.buttons[2].setText("O");
-		tic.buttons[5].setText("O");
-		tic.buttons[8].setText("O");
-		tic.checkForWinner();
-		assertEquals("O wins", tic.textfield.getText());
-	}
+	
 
 }
